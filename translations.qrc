@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>trEnglish.qml</file>
+        <file>trPolish.qml</file>
+    </qresource>
+</RCC>
