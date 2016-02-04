@@ -25,6 +25,7 @@
 ****************************************************************************/
 
 import QtQuick 2.5
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: mainApplicationWindow
@@ -43,6 +44,17 @@ Rectangle {
     property double currentScore: 0
     property int timeLeft
 
+
+    RadialGradient {
+        anchors.fill: parent
+        cached: true
+        verticalOffset: parent.height * 0.2 * Math.random()
+        horizontalOffset: parent.width * 0.2 * Math.random()
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#F2F2F2" }
+            GradientStop { position: 0.7; color: "#9E9E9E" }
+        }
+    }
 
     Rectangle {
         id: pointsTextContainer
@@ -99,6 +111,88 @@ Rectangle {
         color: "black"
         text: translate.time + (timeLeft / 1000).toFixed(1);
         wrapMode: Text.NoWrap
+    }
+
+    Item {
+        id: colorBallsContainer
+        anchors.top: timeText.bottom
+        anchors.topMargin: marginWidth
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height - marginWidth * 6
+
+        Item {
+            id: targetBallContainer
+            anchors.fill: parent
+            anchors.rightMargin: parent.width / 2
+            CustomText {
+                id: targetBallText
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                }
+                height: parent.height / 8
+                text: translate.target
+            }
+            Rectangle {
+                id: targetBallRectangle
+                height: Math.min(parent.height * 6 / 8, parent.width / 2)
+                width: height
+                y: targetBallText.height * 2
+                x: (parent.width - width) / 2
+                radius: height / 2
+                color: randomColor()
+            }
+        }
+        Item {
+            id: currentColorBallContainer
+            anchors.fill: parent
+            anchors.leftMargin: parent.width / 2
+            CustomText {
+                id: currentColorBallText
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                }
+                height: parent.height / 8
+                text: translate.current
+            }
+            Rectangle {
+                id: currentColorBallRectangle
+                height: Math.min(parent.height * 6 / 8, parent.width / 2)
+                width: height
+                y: currentColorBallText.height * 2
+                x: (parent.width - width) / 2
+                radius: height / 2
+                color: "white"
+            }
+        }
+    }
+
+    Item {
+        id: colorPickerContainer
+        width: parent.width
+        height: marginWidth * 2
+        y: parent.height - marginWidth * 3
+
+        Grid {
+            id: colorPicker
+
+            spacing: marginWidth / 5
+
+
+
+        }
+    }
+
+    Component {
+        id: oneColorObject
+        Item {
+            property var color: [0, 0, 0]
+            property
+        }
     }
 
     Timer {

@@ -96,9 +96,9 @@ Window {
     Component.onCompleted: {
         var component
         if (defaultLanguage == "pl")
-            component = Qt.createComponent("qrc:/trPolish.qml")
+            component = Qt.createComponent("qrc:/translations/trPolish.qml")
         else
-            component = Qt.createComponent("qrc:/trEnglish.qml")
+            component = Qt.createComponent("qrc:/translations/trEnglish.qml")
         if (component.status !== Component.Ready)
             console.log(component.errorString())
         else

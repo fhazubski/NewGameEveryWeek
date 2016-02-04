@@ -16,8 +16,8 @@ HEADERS += \
 
 RESOURCES += qml.qrc \
     assets.qrc \
-    png_font.qrc \
-    translations.qrc
+    translations.qrc \
+    qml_games.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

@@ -5,7 +5,6 @@
         <file>MainMenu.qml</file>
         <file>DataModel.qml</file>
         <file>MovingTileBackground.qml</file>
-        <file>1TapEmOut.qml</file>
         <file>GameInterface.qml</file>
         <file>CustomPNGText.qml</file>
         <file>PixelImage.qml</file>
@@ -15,9 +14,5 @@
         <file>GameCard.qml</file>
         <file>LoadingCircle.qml</file>
         <file>GamePreview.qml</file>
-        <file>0GameTemplate.qml</file>
-        <file>2RollTheCat.qml</file>
-        <file>3Juggle.qml</file>
-        <file>4AvoidNinjaStars.qml</file>
     </qresource>
 </RCC>

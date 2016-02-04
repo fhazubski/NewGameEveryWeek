@@ -1,0 +1,7 @@
+# Local settings #
+###################
+*.pro.user
+
+# Probably containing private info #
+###################
+user.keystore

@@ -143,8 +143,8 @@ Rectangle {
         text: {
             var longest = ""
             for (var i = 0 ; i < gamesListModel.count ; i++) {
-                if (longest.length < gamesListModel.get(i).gameName.length)
-                    longest = gamesListModel.get(i).gameName
+                if (longest.length < translate.gameNames[gamesListModel.get(i).gameIndex].length)
+                    longest = translate.gameNames[gamesListModel.get(i).gameIndex]
             }
             return longest + longest
         }
@@ -161,7 +161,7 @@ Rectangle {
             height: dataModel.windowLength / 20
             imageSource: "qrc:/assets/images/game_name_bar.png"
             smoothImage: false
-            text: (index + 1) + ". " + gameName
+            text: (index + 1) + ". " + translate.gameNames[gameIndex]
 
             brightnessChange: -0.2
 //            CustomText {
@@ -175,7 +175,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    startNewGame(gameName, gameQML, index)
+                    startNewGame(translate.gameNames[gameIndex], gameQML, index)
                 }
             }
             DebugRectangle{ debugName: "gameListElement" }
@@ -184,10 +184,11 @@ Rectangle {
 
     ListModel {
         id: gamesListModel
-        ListElement{ gameName: "Tap 'Em Out!"; gameQML: "1TapEmOut.qml" }
-        ListElement{ gameName: "Roll The Cat!"; gameQML: "2RollTheCat.qml" }
-        ListElement{ gameName: "Juggle!"; gameQML: "3Juggle.qml" }
-        ListElement{ gameName: "Avoid Shurikens!"; gameQML: "4AvoidNinjaStars.qml" }
+        ListElement{ gameIndex: 0; gameQML: "1TapEmOut.qml" }
+        ListElement{ gameIndex: 1; gameQML: "2RollTheCat.qml" }
+        ListElement{ gameIndex: 2; gameQML: "3Juggle.qml" }
+        ListElement{ gameIndex: 3; gameQML: "4AvoidNinjaStars.qml" }
+        ListElement{ gameIndex: 4; gameQML: "5MixColors.qml" }
     }
 
     GameCard {

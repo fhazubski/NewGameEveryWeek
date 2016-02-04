@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>trEnglish.qml</file>
-        <file>trPolish.qml</file>
+        <file>translations/trEnglish.qml</file>
+        <file>translations/trPolish.qml</file>
     </qresource>
 </RCC>

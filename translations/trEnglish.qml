@@ -41,9 +41,14 @@ Item {
 
 
     property string purr: "Purr!"
+    property string target: "Target:"
+    property string current: "Current:"
 
-    property string game1Name: "Tap 'Em Out!";
-    property string game2Name: "Roll The Cat!";
-    property string game3Name: "Juggle!";
-    property string game4Name: "Avoid Shurikens!"
+    property var gameNames: [
+        "Tap 'Em Out!",
+        "Roll The Cat!",
+        "Juggle!",
+        "Avoid Shurikens!",
+        "Mix Colors!"
+    ]
 }

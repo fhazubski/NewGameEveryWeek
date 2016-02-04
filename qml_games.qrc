@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>0GameTemplate.qml</file>
+        <file>1TapEmOut.qml</file>
+        <file>2RollTheCat.qml</file>
+        <file>3Juggle.qml</file>
+        <file>4AvoidNinjaStars.qml</file>
+        <file>5MixColors.qml</file>
+    </qresource>
+</RCC>

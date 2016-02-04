@@ -50,5 +50,6 @@
         <file>assets/font/NotoSerif/NotoSerif-BoldItalic.ttf</file>
         <file>assets/font/NotoSerif/NotoSerif-Italic.ttf</file>
         <file>assets/font/NotoSerif/NotoSerif-Regular.ttf</file>
+        <file>assets/images/color_button.png</file>
     </qresource>
 </RCC>

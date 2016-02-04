@@ -35,15 +35,20 @@ Item {
     property string quit: "Wyjdź"
     property string gameOver: "Koniec Gry!"
     property string yourScore: "Twój wynik:"
-    property string playAgain: "Graj jeszcze raz"
+    property string playAgain: "Jeszcze raz"
     property string score: "Wynik: "
     property string time: "Czas: "
 
 
     property string purr: "Mrr!"
+    property string target: "Cel:"
+    property string current: "Aktualny:"
 
-    property string game1Name: "Tap 'Em Out!";
-    property string game2Name: "Roll The Cat!";
-    property string game3Name: "Juggle!";
-    property string game4Name: "Avoid Shurikens!"
+    property var gameNames: [
+        "Tapnij Je Wszystkie!",
+        "Turlaj Kota!",
+        "Żongluj!",
+        "Unikaj Shurikenów!",
+        "Mieszaj kolory!"
+    ]
 }
