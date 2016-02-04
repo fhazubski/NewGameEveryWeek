@@ -8,4 +8,4 @@ Inspire with it, learn from it, modify it. Do whatever you want, you have my per
 
 **However** if you want to **share** my work (whole, or only a part) or use it as part of your own project I require you to credit me as the original author.
 
-Full text of the license can be found [here](https://github.com/fhazubski/NewGameEveryWeek/blob/master/LICENCE.txt).
+Full text of the license can be found [here](https://github.com/fhazubski/NewGameEveryWeek/blob/master/LICENSE.txt).
