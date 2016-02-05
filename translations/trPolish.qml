@@ -43,6 +43,7 @@ Item {
     property string purr: "Mrr!"
     property string target: "Cel:"
     property string current: "Aktualny:"
+    property string choose: "Wybierz "
 
     property var gameNames: [
         "Tapnij Je Wszystkie!",

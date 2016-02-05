@@ -43,6 +43,7 @@ Item {
     property string purr: "Purr!"
     property string target: "Target:"
     property string current: "Current:"
+    property string choose: "Choose "
 
     property var gameNames: [
         "Tap 'Em Out!",

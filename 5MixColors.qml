@@ -40,9 +40,10 @@ Rectangle {
     property bool gameRunning: false
     property double marginWidth: Math.min(width, height) / 10
 
-    property int gameTime: 15 * 1000
+    property int gameTime: 30 * 1000
     property double currentScore: 0
     property int timeLeft
+    property int numberOfNeededColors: 2
 
 
     RadialGradient {
@@ -115,10 +116,9 @@ Rectangle {
 
     Item {
         id: colorBallsContainer
-        anchors.top: timeText.bottom
-        anchors.topMargin: marginWidth
-        anchors.left: parent.left
-        anchors.right: parent.right
+        y: marginWidth * 3 + (parent.height - marginWidth * 4
+                              - colorPickerContainer.height - height) / 2
+        width: parent.width
         height: parent.height - marginWidth * 6
 
         Item {
@@ -128,21 +128,32 @@ Rectangle {
             CustomText {
                 id: targetBallText
                 anchors {
-                    top: parent.top
                     left: parent.left
                     right: parent.right
+                    bottom: targetBallRectangle.top
+                    bottomMargin: height * 0.2
                 }
-                height: parent.height / 8
+                height: Math.min(parent.height / 8, targetBallRectangle.height / 2)
                 text: translate.target
             }
             Rectangle {
                 id: targetBallRectangle
                 height: Math.min(parent.height * 6 / 8, parent.width / 2)
                 width: height
-                y: targetBallText.height * 2
+                y: (parent.height - targetBallText.height * 1.2 - height) / 2
                 x: (parent.width - width) / 2
                 radius: height / 2
-                color: randomColor()
+                color: "#FFFFFF"
+                function setColor(newColor) {
+                    targetBallRectangleColorAnimation.from = color
+                    targetBallRectangleColorAnimation.to = newColor
+                    targetBallRectangleColorAnimation.restart()
+                }
+                ColorAnimation on color {
+                    id: targetBallRectangleColorAnimation
+                    running: false
+                    duration: 250
+                }
             }
         }
         Item {
@@ -152,21 +163,32 @@ Rectangle {
             CustomText {
                 id: currentColorBallText
                 anchors {
-                    top: parent.top
                     left: parent.left
                     right: parent.right
+                    bottom: currentColorBallRectangle.top
+                    bottomMargin: height * 0.2
                 }
-                height: parent.height / 8
+                height: Math.min(parent.height / 8, currentColorBallRectangle.height / 2)
                 text: translate.current
             }
             Rectangle {
                 id: currentColorBallRectangle
                 height: Math.min(parent.height * 6 / 8, parent.width / 2)
                 width: height
-                y: currentColorBallText.height * 2
+                y: (parent.height - currentColorBallText.height * 1.2 - height) / 2
                 x: (parent.width - width) / 2
                 radius: height / 2
-                color: "white"
+                color: "#FFFFFF"
+                function setColor(newColor) {
+                    currentColorBallRectangleColorAnimation.from = color
+                    currentColorBallRectangleColorAnimation.to = newColor
+                    currentColorBallRectangleColorAnimation.restart()
+                }
+                ColorAnimation on color {
+                    id: currentColorBallRectangleColorAnimation
+                    running: false
+                    duration: 250
+                }
             }
         }
     }
@@ -177,21 +199,74 @@ Rectangle {
         height: marginWidth * 2
         y: parent.height - marginWidth * 3
 
+        CustomText {
+            id: numberOfColorsNeededText
+            width: parent.width
+            height: currentColorBallText.contentHeight * 1.6
+            anchors.bottom: colorPicker.top
+            font.pixelSize: currentColorBallText.contentHeight * 0.8
+            text: translate.choose + numberOfNeededColors
+        }
+
         Grid {
             id: colorPicker
-
             spacing: marginWidth / 5
+            anchors.centerIn: parent
+
+            property double maxColorWidth: parent.width * 0.8 / 4
+            property double maxColorHeight: parent.height * 0.95 / colorPicker.rows
+            property bool maxWider:
+                (maxColorWidth / maxColorHeight > 2 ? true : false)
+
+            property double colorWidth:
+                (maxWider ? maxColorHeight * 2 : maxColorWidth)
+            property double colorHeight:
+                (maxWider ? maxColorHeight : maxColorWidth / 2)
 
 
+            columns: 4
+            rows: 2
+            Repeater {
+                id: colorsRepeater
+                onCountChanged: {
+                    if (count == model && count > 0)
+                        generateColorFromAvailable(2)
+                }
+                model: 8
+                Item {
+                    property var color: randomColorArray()
+                    property bool isActive: false
 
-        }
-    }
+                    width: colorPicker.colorWidth
+                    height: colorPicker.colorHeight
 
-    Component {
-        id: oneColorObject
-        Item {
-            property var color: [0, 0, 0]
-            property
+                    PixelImage {
+                        id: colorPickerImage
+                        anchors.fill: parent
+                        source: "qrc:/assets/images/color_button.png"
+                    }
+                    ColorOverlay {
+                        anchors.fill: colorPickerImage
+                        source: colorPickerImage
+                        color: valuesToColor(parent.color[0],
+                                             parent.color[1],
+                                             parent.color[2])
+                    }
+                    PixelImage {
+                        anchors.fill: parent
+                        visible: parent.isActive
+                        source: "qrc:/assets/images/color_button_active_frame.png"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            parent.isActive = !parent.isActive
+                            calculateCurrentBallColor()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -246,6 +321,69 @@ Rectangle {
             to: 1
             duration: 1000
         }
+    }
+
+    function calculateCurrentBallColor() {
+        var nR = 0, nG = 0, nB = 0, noActive = 0
+        for (var i = 0 ; i < colorsRepeater.count ; i++) {
+            if (colorsRepeater.itemAt(i).isActive) {
+                noActive++
+                nR += colorsRepeater.itemAt(i).color[0]
+                nG += colorsRepeater.itemAt(i).color[1]
+                nB += colorsRepeater.itemAt(i).color[2]
+            }
+        }
+        if (noActive) {
+            nR = Math.round(nR / noActive)
+            nG = Math.round(nG / noActive)
+            nB = Math.round(nB / noActive)
+            currentColorBallRectangle.setColor(valuesToColor(nR, nG, nB))
+        }
+        else
+            currentColorBallRectangle.setColor("#FFFFFF")
+    }
+
+    function valuesToColor(r, g, b) {
+        return "#"
+                + (r < 16 ? "0" : "")
+                + r.toString(16)
+                + (g < 16 ? "0" : "")
+                + g.toString(16)
+                + (b < 16 ? "0" : "")
+                + b.toString(16)
+    }
+    function randomColorArray() {
+        return [
+                    Math.round(Math.random() * 255),
+                    Math.round(Math.random() * 255),
+                    Math.round(Math.random() * 255)
+                ]
+    }
+    function generateColorFromAvailable(number) {
+        var available = new Array
+        var chosen = new Array
+        var i, newRandom, range = colorsRepeater.model, tmp
+        for (i = 0 ; i < range ; i++)
+            available.push(i)
+        for (i = 0 ; i < number ; i++) {
+            newRandom = Math.floor(Math.random() * range) % range
+            chosen.push(available[newRandom])
+            tmp = available[range - 1]
+            available[range - 1] = available[newRandom]
+            available[newRandom] = tmp
+            range--;
+        }
+
+        var nR = 0, nG = 0, nB = 0
+        for (var i = 0 ; i < chosen.length ; i++) {
+            nR += colorsRepeater.itemAt(chosen[i]).color[0]
+            nG += colorsRepeater.itemAt(chosen[i]).color[1]
+            nB += colorsRepeater.itemAt(chosen[i]).color[2]
+        }
+        nR = Math.round(nR / chosen.length)
+        nG = Math.round(nG / chosen.length)
+        nB = Math.round(nB / chosen.length)
+        targetBallRectangle.setColor(valuesToColor(nR, nG, nB))
     }
 
     function startGame() {

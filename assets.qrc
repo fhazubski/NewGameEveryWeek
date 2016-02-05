@@ -51,5 +51,6 @@
         <file>assets/font/NotoSerif/NotoSerif-Italic.ttf</file>
         <file>assets/font/NotoSerif/NotoSerif-Regular.ttf</file>
         <file>assets/images/color_button.png</file>
+        <file>assets/images/color_button_active_frame.png</file>
     </qresource>
 </RCC>
